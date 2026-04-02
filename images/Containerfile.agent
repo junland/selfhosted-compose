@@ -1,0 +1,98 @@
+FROM jenkins/ssh-agent:latest-jdk25
+
+USER root
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV TIMEZONE=UTC
+
+ENV LC_ALL=POSIX
+
+ENV LANGUAGE=POSIX
+
+RUN touch /.dockerenv
+
+# Set timezone
+RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE >/etc/timezone
+
+# Install dependencies
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    autoconf \
+    autoconf2.69 \
+    automake \
+    autopoint \
+    bc \
+    binutils-dev \
+    bison \
+    build-essential \
+    byacc \
+    ca-certificates \
+    curl \
+    dos2unix \
+    expect \
+    flex \
+    gawk \
+    gettext \
+    gettext-base \
+    git \
+    gperf \
+    help2man \
+    iputils-ping \
+    libacl1-dev \
+    libarchive-dev \
+    libarchive-tools \
+    libbison-dev \
+    libconfig++-dev \
+    libconfig-dev \
+    libelf-dev \
+    libssl-dev \
+    libtool \
+    libzstd-dev \
+    lzip \
+    m4 \
+    make \
+    meson \
+    nano \
+    ninja-build \
+    perl \
+    pkg-config \
+    podman \
+    python3 \
+    qemu-user-static \
+    rsync \
+    sudo \
+    texinfo \
+    texlive-base \
+    tree \
+    tree \
+    unzip \
+    unzip \
+    vim \
+    wget \
+    zlib1g-dev
+
+# Update certs
+RUN update-ca-certificates
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Point dash to bash
+RUN ln -sf /bin/bash /bin/sh
+
+# Setup sudo
+RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && echo 'jenkins:jenkins' | chpasswd
+
+# More setup for jenkins user
+RUN echo "set +h" >> /home/jenkins/.bashrc
+RUN echo "umask 022" >> /home/jenkins/.bashrc
+RUN echo "hash -r >/dev/null 2>&1 || true" >>/home/jenkins/.bashrc
+RUN test -f /etc/bash.bashrc && mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE || true
+
+# Copy ssh auth keys
+#COPY --chown=jenkins .ssh/default.key "${JENKINS_AGENT_HOME}"/.ssh/authorized_keys
+
+# Setup sshd
+RUN echo "PubkeyAcceptedAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
+USER jenkins

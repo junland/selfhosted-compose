@@ -1,0 +1,23 @@
+services:
+  haproxy:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: localhost/haproxy:latest
+    container_name: haproxy-web-service
+    hostname: 'haproxy'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      TZ: US/Central
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/selfhosted/haproxy/conf:/var/lib/haproxy'
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/var/run/haproxy:/var/run/haproxy'
+    command: haproxy -f haproxy.cfg -f backend
+    labels:
+      - "io.containers.autoupdate=local"
+      - "com.infra.service=haproxy"

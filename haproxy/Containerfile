@@ -1,0 +1,25 @@
+FROM docker.io/haproxy:latest
+
+USER root
+
+ENV DATA_PLANE_API_VERSION=3.3.2
+
+ENV DATA_PLANE_API_ARCH=x86_64
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ADD https://github.com/haproxytech/dataplaneapi/releases/download/v${DATA_PLANE_API_VERSION}/dataplaneapi_${DATA_PLANE_API_VERSION}_linux_${DATA_PLANE_API_ARCH}.tar.gz /tmp
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y liblua5.3-0 libopentracing-c-wrapper0 libopentracing1 curl socat wget iputils-ping && apt-get clean all
+
+RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/lego
+
+RUN chown -R haproxy:haproxy /run/haproxy
+
+RUN tar -xvf /tmp/dataplaneapi_${DATA_PLANE_API_VERSION}_linux_${DATA_PLANE_API_ARCH}.tar.gz -C /tmp
+
+RUN mv /tmp/dataplaneapi /usr/local/sbin && chmod +x /usr/local/sbin/dataplaneapi && chown root:root /usr/local/sbin/dataplaneapi
+
+COPY --chmod=755 scripts/run-dataplaneapi.sh /usr/local/bin/run-dataplaneapi.sh
+
+RUN haproxy -vv

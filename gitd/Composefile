@@ -1,0 +1,28 @@
+services:
+  gitd:
+    image: 'codeberg.org/forgejo/forgejo:14'
+    container_name: gitd-app-service
+    hostname: 'gitd'
+    restart: unless-stopped
+    environment:
+      USER_UID: 1000
+      USER_GID: 1000
+    healthcheck:
+      test: curl --fail http://localhost:3000/ || exit 1
+      interval: 40s
+      timeout: 30s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/timezone:/etc/timezone:ro'
+      - gitd_data:/data
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=gitd"
+
+volumes:
+  gitd_data:
+    name: 'gitd_app_data'
+    labels:
+      backup: 'true'

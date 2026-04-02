@@ -1,0 +1,67 @@
+services:
+  hass:
+    image: 'ghcr.io/home-assistant/home-assistant:latest'
+    container_name: hass-app-service
+    hostname: 'hass'
+    restart: unless-stopped
+    ports:
+      - '1900:1900' # UPnP
+      - '5353:5353' # Avahi
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - 'hass_app_data:/config'
+      - 'hass_media_data:/config/media'
+      - 'hass_log_data:/var/log'
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/run/dbus:/run/dbus:ro'
+    devices:
+      - '/dev/ttyACM0:/dev/ttyACM0'
+      - '/dev/dri:/dev/dri'
+    privileged: true
+    command: python -m homeassistant --config /config --log-file /var/log/hass.log
+    healthcheck:
+      test: curl --fail http://localhost:8123/ || exit 1
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 120s
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=hass"
+  
+  hass_mq:
+    image: 'docker.io/eclipse-mosquitto:latest'
+    container_name: hass-mq-service
+    hostname: 'hass_mq'
+    restart: unless-stopped
+    depends_on:
+      hass:
+        condition: service_healthy
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - ./conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./conf/mosquitto_creds.conf:/mosquitto/config/credentials.conf
+      - 'hass_mq_data:/mosquitto/data'
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=hass"
+
+volumes:
+  hass_app_data:
+    name: 'hass_app_data'
+    labels:
+      backup: 'true'
+  hass_log_data:
+    name: 'hass_log_data'
+    labels:
+      backup: 'false'
+  hass_media_data:
+    name: 'hass_media_data'
+    labels:
+      backup: 'true'
+  hass_mq_data:
+    name: 'hass_mq_data'
+    labels:
+      backup: 'true'

@@ -1,0 +1,60 @@
+services:
+  hoarder:
+    image: 'ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}'
+    container_name: hoarder-app-service
+    hostname: 'hoarder'
+    restart: unless-stopped
+    environment:
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+      INFERENCE_JOB_TIMEOUT_SEC: 300
+      INFERENCE_TEXT_MODEL: qwen:7b
+      MEILI_ADDR: http://meilisearch:7700
+      NODE_NO_WARNINGS: 1
+      OLLAMA_BASE_URL: http://ollama-app-service:11434
+      OLLAMA_KEEP_ALIVE: 15m
+    env_file:
+      - conf/.env
+    volumes:
+      - hoarder_app_data:/data
+
+  chrome:
+    build:
+      context: .
+      dockerfile: Containerfile.chrome
+    image: 'localhost/alpine-chrome:adblock'
+    container_name: 'hoarder-chrome-service'
+    hostname: 'chrome'
+    restart: unless-stopped
+    command:
+      - --disable-dev-shm-usage
+      - --disable-gpu
+      - --disable-sync
+      - --hide-scrollbars
+      - --load-extension=/usr/src/app/extensions/adblock
+      - --no-first-run
+      - --no-sandbox
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+
+  meilisearch:
+    image: 'docker.io/getmeili/meilisearch:v1.13'
+    container_name: 'hoarder-search-service'
+    hostname: 'meilisearch'
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    env_file:
+      - conf/.env
+    volumes:
+      - hoarder_search_data:/meili_data
+
+volumes:
+  hoarder_app_data:
+    name: 'hoarder_app_data'
+    labels:
+      backup: "true"
+  hoarder_search_data:
+    name: 'hoarder_search_data'
+    labels:
+      backup: "true"

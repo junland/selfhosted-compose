@@ -1,0 +1,128 @@
+dataRoot: ./data
+listen: false
+protocol:
+  ipv4: true
+  ipv6: false
+dnsPreferIPv6: false
+port: 8000
+whitelistMode: true
+enableForwardedWhitelist: true
+whitelist:
+  - ::1
+  - 127.0.0.1
+  - 0.0.0.0
+  - 10.89.0.*
+  - 192.168.1.*
+basicAuthMode: false
+basicAuthUser:
+  username: user
+  password: password
+enableCorsProxy: false
+requestProxy:
+  enabled: false
+  url: socks5://username:password@example.com:1080
+  bypass:
+    - localhost
+    - 127.0.0.1
+enableUserAccounts: false
+enableDiscreetLogin: false
+perUserBasicAuth: false
+sessionTimeout: 86400
+disableCsrfProtection: false
+securityOverride: false
+backups:
+  common:
+    numberOfBackups: 50
+  chat:
+    enabled: true
+    maxTotalBackups: -1
+    throttleInterval: 10000
+    checkIntegrity: true
+thumbnails:
+  enabled: true
+  format: jpg
+  quality: 95
+  dimensions:
+    bg:
+      - 160
+      - 90
+    avatar:
+      - 96
+      - 144
+    persona:
+      - 96
+      - 144
+allowKeysExposure: false
+skipContentCheck: false
+whitelistImportDomains:
+  - localhost
+  - cdn.discordapp.com
+  - files.catbox.moe
+  - raw.githubusercontent.com
+  - char-archive.evulid.cc
+requestOverrides: []
+enableDownloadableTokenizers: true
+extras: {}
+promptPlaceholder: "[Start a new chat]"
+openai:
+  randomizeUserId: false
+  captionSystemPrompt: ""
+deepl:
+  formality: default
+mistral:
+  enablePrefix: false
+ollama:
+  keepAlive: -1
+  batchSize: -1
+claude:
+  enableSystemPromptCache: false
+  cachingAtDepth: -1
+  extendedTTL: false
+enableServerPlugins: false
+extensions:
+  enabled: true
+  autoUpdate: true
+  models:
+    autoDownload: true
+    classification: Cohee/distilbert-base-uncased-go-emotions-onnx
+    captioning: Xenova/vit-gpt2-image-captioning
+    embedding: Cohee/jina-embeddings-v2-base-en
+    speechToText: Xenova/whisper-small
+    textToSpeech: Xenova/speecht5_tts
+performance:
+  memoryCacheCapacity: 100mb
+  lazyLoadCharacters: false
+  useDiskCache: true
+listenAddress:
+  ipv4: 0.0.0.0
+  ipv6: "[::]"
+ssl:
+  enabled: false
+  certPath: ./certs/cert.pem
+  keyPath: ./certs/privkey.pem
+  keyPassphrase: ""
+whitelistDockerHosts: true
+logging:
+  enableAccessLog: true
+  minLogLevel: 0
+rateLimiting:
+  preferRealIpHeader: false
+enableServerPluginsAutoUpdate: true
+gemini:
+  apiVersion: v1beta
+browserLaunch:
+  enabled: true
+  hostname: auto
+  port: -1
+  avoidLocalhost: false
+  browser: default
+cacheBuster:
+  enabled: false
+  userAgentPattern: ""
+hostWhitelist:
+  enabled: false
+  scan: true
+  hosts: []
+sso:
+  autheliaAuth: false
+  authentikAuth: false

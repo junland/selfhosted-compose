@@ -1,0 +1,33 @@
+services:
+  tavern:
+    image: 'ghcr.io/sillytavern/sillytavern:release'
+    container_name: tavern-app-service
+    hostname: 'tavern'
+    restart: unless-stopped
+    tty: true
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/services.d/tavern/conf:/home/node/app/config
+      - /etc/timezone:/etc/timezone:ro
+      - tavern_app_data:/home/node/app/data
+      - tavern_exts_data:/home/node/app/public/scripts/extensions/third-party      
+      - tavern_plugins_data:/home/node/app/plugins
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=tavern"
+
+volumes:
+  tavern_app_data:
+    name: tavern_app_data
+    labels:
+      backup: 'true'
+  tavern_plugins_data:
+    name: tavern_plugins_data
+    labels:
+      backup: 'true'
+  tavern_exts_data:
+    name: tavern_exts_data
+    labels:
+      backup: 'true'

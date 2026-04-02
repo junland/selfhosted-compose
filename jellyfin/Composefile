@@ -1,0 +1,31 @@
+services:
+  jellyfin:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: 'localhost/jellyfin:latest'
+    container_name: jellyfin-app-service
+    hostname: 'jellyfin'
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.selfhosted.com
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/mnt/storage/media:/media'
+      - 'jellyfin_cache_data:/cache'
+      - 'jellyfin_data:/config'
+    devices:
+      - nvidia.com/gpu=all  
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=jellyfin"
+
+volumes:
+  jellyfin_data:
+    name: 'jellyfin_app_data'
+    labels:
+      backup: 'true'
+  jellyfin_cache_data:
+    name: 'jellyfin_cache_data'
+    labels:
+      backup: 'true'

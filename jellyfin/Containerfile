@@ -1,0 +1,3 @@
+FROM docker.io/jellyfin/jellyfin:latest
+
+RUN mkdir -p /wwwroot

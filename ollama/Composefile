@@ -1,0 +1,25 @@
+services:
+  ollama:
+    image: 'docker.io/ollama/ollama:latest'
+    container_name: ollama-app-service
+    hostname: 'ollama'
+    restart: unless-stopped
+    tty: true
+    environment:
+      OLLAMA_KEEP_ALIVE: 30m
+      GIN_MODE: release
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /mnt/storage/ai/ollama:/root/.ollama
+    devices:
+      - nvidia.com/gpu=all  
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "com.infra.service=ollama"
+
+volumes:
+  ollama_app_data:
+    name: ollama_app_data
+    labels:
+      backup: 'false'

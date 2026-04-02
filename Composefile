@@ -1,0 +1,10 @@
+include:
+  - haproxy/Composefile
+  - ci/Composefile
+  - gitd/Composefile
+  - grafana/Composefile
+  - hass/Composefile
+  - hoarder/Composefile
+  - jellyfin/Composefile
+  - ollama/Composefile
+  - tavern/Composefile

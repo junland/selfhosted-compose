@@ -1,0 +1,33 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.secret
+*.key
+*.pem
+*.crt
+
+# Runtime data and volumes
+data/
+volumes/
+storage/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+*.tmp
+*.bak

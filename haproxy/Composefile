@@ -11,7 +11,7 @@ services:
       - '80:80'
       - '443:443'
     environment:
-      TZ: US/Central
+      TZ: ${SELFHOSTED_TZ}
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
       - '/etc/selfhosted/haproxy/conf:/var/lib/haproxy'

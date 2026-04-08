@@ -1,20 +1,25 @@
 services:
   hoarder:
-    image: 'ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}'
+    image: 'ghcr.io/karakeep-app/karakeep:${SELFHOSTED_HOARDER_VERSION:-release}'
     container_name: hoarder-app-service
     hostname: 'hoarder'
     restart: unless-stopped
     environment:
-      BROWSER_WEB_URL: http://chrome:9222
-      DATA_DIR: /data
-      INFERENCE_JOB_TIMEOUT_SEC: 300
-      INFERENCE_TEXT_MODEL: qwen:7b
-      MEILI_ADDR: http://meilisearch:7700
-      NODE_NO_WARNINGS: 1
-      OLLAMA_BASE_URL: http://ollama-app-service:11434
-      OLLAMA_KEEP_ALIVE: 15m
-    env_file:
-      - conf/.env
+      BROWSER_WEB_URL: ${SELFHOSTED_HOARDER_BROWSER_WEB_URL}
+      CRAWLER_NUM_WORKERS: ${SELFHOSTED_HOARDER_CRAWLER_NUM_WORKERS}
+      CRAWLER_VIDEO_DOWNLOAD: ${SELFHOSTED_HOARDER_CRAWLER_VIDEO_DOWNLOAD}
+      CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE: ${SELFHOSTED_HOARDER_CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE}
+      DATA_DIR: ${SELFHOSTED_HOARDER_DATA_DIR}
+      DISABLE_SIGNUPS: ${SELFHOSTED_HOARDER_DISABLE_SIGNUPS}
+      INFERENCE_JOB_TIMEOUT_SEC: ${SELFHOSTED_HOARDER_INFERENCE_JOB_TIMEOUT_SEC}
+      INFERENCE_TEXT_MODEL: ${SELFHOSTED_HOARDER_INFERENCE_TEXT_MODEL}
+      MEILI_ADDR: ${SELFHOSTED_HOARDER_MEILI_ADDR}
+      MEILI_MASTER_KEY: ${SELFHOSTED_HOARDER_MEILI_MASTER_KEY}
+      NEXTAUTH_SECRET: ${SELFHOSTED_HOARDER_NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${SELFHOSTED_HOARDER_NEXTAUTH_URL}
+      NODE_NO_WARNINGS: ${SELFHOSTED_HOARDER_NODE_NO_WARNINGS}
+      OLLAMA_BASE_URL: ${SELFHOSTED_HOARDER_OLLAMA_BASE_URL}
+      OLLAMA_KEEP_ALIVE: ${SELFHOSTED_HOARDER_OLLAMA_KEEP_ALIVE}
     volumes:
       - hoarder_app_data:/data
 
@@ -43,9 +48,8 @@ services:
     hostname: 'meilisearch'
     restart: unless-stopped
     environment:
-      MEILI_NO_ANALYTICS: "true"
-    env_file:
-      - conf/.env
+      MEILI_MASTER_KEY: ${SELFHOSTED_HOARDER_MEILI_MASTER_KEY}
+      MEILI_NO_ANALYTICS: ${SELFHOSTED_HOARDER_MEILI_NO_ANALYTICS}
     volumes:
       - hoarder_search_data:/meili_data
 

@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      OLLAMA_KEEP_ALIVE: 24h
+      OLLAMA_KEEP_ALIVE: ${SELFHOSTED_TAVERN_OLLAMA_KEEP_ALIVE}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/services.d/tavern/conf:/home/node/app/config

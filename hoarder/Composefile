@@ -21,6 +21,8 @@ services:
       OLLAMA_BASE_URL: ${SELFHOSTED_HOARDER_OLLAMA_BASE_URL}
       OLLAMA_KEEP_ALIVE: ${SELFHOSTED_HOARDER_OLLAMA_KEEP_ALIVE}
     volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/timezone:/etc/timezone:ro'
       - hoarder_app_data:/data
 
   chrome:
@@ -51,6 +53,8 @@ services:
       MEILI_MASTER_KEY: ${SELFHOSTED_HOARDER_MEILI_MASTER_KEY}
       MEILI_NO_ANALYTICS: ${SELFHOSTED_HOARDER_MEILI_NO_ANALYTICS}
     volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/timezone:/etc/timezone:ro'
       - hoarder_search_data:/meili_data
 
 volumes:

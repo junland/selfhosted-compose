@@ -11,7 +11,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - /mnt/storage/ai/ollama:/root/.ollama
+      - ollama_app_data:/root/.ollama
     devices:
       - nvidia.com/gpu=all  
     labels:

@@ -1,16 +1,28 @@
 include:
-  - haproxy/Composefile
-  - ollama/Composefile
-  - gitd/Composefile
-  - jenkins/Composefile
-  - hass/Composefile
-  - jellyfin/Composefile
-  - hoarder/Composefile
-  - tavern/Composefile
-  - grafana/Composefile
-
-env_file:
-  - path: ./default.env
-    required: true # default
-  - path: ./override.env
-    required: false
+  - path: haproxy/Composefile
+    env_file:
+      - ./default.env
+  - path: ollama/Composefile
+    env_file:
+      - ./default.env
+  - path: gitd/Composefile
+    env_file:
+      - ./default.env
+  - path: jenkins/Composefile
+    env_file:
+      - ./default.env
+  - path: hass/Composefile
+    env_file:
+      - ./default.env
+  - path: jellyfin/Composefile
+    env_file:
+      - ./default.env
+  - path: hoarder/Composefile
+    env_file:
+      - ./default.env
+  - path: tavern/Composefile
+    env_file:
+      - ./default.env
+  - path: grafana/Composefile
+    env_file:
+      - ./default.env

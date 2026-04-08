@@ -1,28 +1,23 @@
+x-env: &default-env
+  env_file:
+    - ./default.env
+
 include:
   - path: haproxy/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: ollama/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: gitd/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: jenkins/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: hass/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: jellyfin/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: hoarder/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: tavern/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env
   - path: grafana/Composefile
-    env_file:
-      - ./default.env
+    <<: *default-env

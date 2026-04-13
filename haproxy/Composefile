@@ -14,7 +14,7 @@ services:
       TZ: ${SELFHOSTED_TZ}
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/selfhosted/haproxy/conf:/var/lib/haproxy'
+      - './conf:/var/lib/haproxy'
       - '/etc/timezone:/etc/timezone:ro'
       - '/var/run/haproxy:/var/run/haproxy'
       - '$SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:/etc/ssl/certs/external'

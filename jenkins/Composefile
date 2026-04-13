@@ -46,6 +46,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_AGENT_JAVA_OPTS}
+      DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
       TZ: ${SELFHOSTED_TZ}
     secrets:
       - source: host_ssh_key

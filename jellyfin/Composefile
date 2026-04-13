@@ -11,7 +11,8 @@ services:
       TZ: ${SELFHOSTED_TZ}
       JELLYFIN_PublishedServerUrl: ${SELFHOSTED_JELLYFIN_PUBLISHED_SERVICE_URL}
     volumes:
-      - '/mnt/storage/media:/media'
+      - '$SELFHOSTED_JELLYFIN_PRIMARY_MEDIA:/media/primary'
+      - '$SELFHOSTED_JELLYFIN_SECONDARY_MEDIA:/media/SECONDARY'
       - 'jellyfin_cache_data:/cache'
       - 'jellyfin_data:/config'
     devices:

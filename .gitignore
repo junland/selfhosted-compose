@@ -1,6 +1,7 @@
 # Environment and secrets
 !default.env
 override.env
+*_override.env
 .env
 .env.*
 !.env.example

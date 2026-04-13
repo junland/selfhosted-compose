@@ -10,12 +10,12 @@ services:
     environment:
       - TZ=${SELFHOSTED_TZ}
     volumes:
-      - 'hass_app_data:/config'
-      - 'hass_media_data:/config/media'
-      - 'hass_log_data:/var/log'
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
-      - '/run/dbus:/run/dbus:ro'
+      - hass_app_data:/config
+      - hass_media_data:/config/media
+      - hass_log_data:/var/log
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /run/dbus:/run/dbus:ro
     devices:
       - '/dev/ttyACM0:/dev/ttyACM0'
       - '/dev/dri:/dev/dri'

@@ -5,8 +5,6 @@ services:
     hostname: 'grafana'
     restart: unless-stopped
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
       - 'grafana_data:/var/lib/grafana'
     labels:
       - "com.infra.service=grafana"

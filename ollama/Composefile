@@ -6,12 +6,11 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      OLLAMA_KEEP_ALIVE: 30m
-      GIN_MODE: release
+      TZ: ${SELFHOSTED_TZ}
+      OLLAMA_KEEP_ALIVE: ${SELFHOSTED_OLLAMA_KEEP_ALIVE}
+      GIN_MODE: ${SELFHOSTED_OLLAMA_GIN_MODE}
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /mnt/storage/ai/ollama:/root/.ollama
+      - ollama_app_data:/root/.ollama
     devices:
       - nvidia.com/gpu=all  
     labels:

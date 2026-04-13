@@ -8,10 +8,11 @@ services:
     hostname: 'jellyfin'
     restart: unless-stopped
     environment:
-      - JELLYFIN_PublishedServerUrl=https://jellyfin.selfhosted.com
+      TZ: ${SELFHOSTED_TZ}
+      JELLYFIN_PublishedServerUrl: ${SELFHOSTED_JELLYFIN_PUBLISHED_SERVICE_URL}
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/mnt/storage/media:/media'
+      - '$SELFHOSTED_JELLYFIN_PRIMARY_MEDIA_HOST_DIR:/media/primary'
+      - '$SELFHOSTED_JELLYFIN_SECONDARY_MEDIA_HOST_DIR:/media/secondary'
       - 'jellyfin_cache_data:/cache'
       - 'jellyfin_data:/config'
     devices:

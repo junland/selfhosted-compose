@@ -6,11 +6,10 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      OLLAMA_KEEP_ALIVE: 24h
+      TZ: ${SELFHOSTED_TZ}
+      OLLAMA_KEEP_ALIVE: ${SELFHOSTED_TAVERN_OLLAMA_KEEP_ALIVE}
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/services.d/tavern/conf:/home/node/app/config
-      - /etc/timezone:/etc/timezone:ro
+      - ./conf:/home/node/app/config
       - tavern_app_data:/home/node/app/data
       - tavern_exts_data:/home/node/app/public/scripts/extensions/third-party      
       - tavern_plugins_data:/home/node/app/plugins

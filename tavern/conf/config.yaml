@@ -38,6 +38,7 @@ backups:
     maxTotalBackups: -1
     throttleInterval: 10000
     checkIntegrity: true
+  allowFullDataBackup: true
 thumbnails:
   enabled: true
   format: jpg
@@ -78,6 +79,7 @@ claude:
   enableSystemPromptCache: false
   cachingAtDepth: -1
   extendedTTL: false
+  enableAdaptiveThinking: false
 enableServerPlugins: false
 extensions:
   enabled: true
@@ -93,6 +95,11 @@ performance:
   memoryCacheCapacity: 100mb
   lazyLoadCharacters: false
   useDiskCache: true
+  requestCompression:
+    enabled: false
+    minPayloadSize: 256kb
+    maxPayloadSize: 8mb
+    timeout: 4000
 listenAddress:
   ipv4: 0.0.0.0
   ipv6: "[::]"
@@ -110,6 +117,10 @@ rateLimiting:
 enableServerPluginsAutoUpdate: true
 gemini:
   apiVersion: v1beta
+  thoughtSignatures: true
+  enableSystemPromptCache: false
+  image:
+    personGeneration: allow_adult
 browserLaunch:
   enabled: true
   hostname: auto
@@ -126,3 +137,16 @@ hostWhitelist:
 sso:
   autheliaAuth: false
   authentikAuth: false
+heartbeatInterval: 0
+cors:
+  enabled: true
+  origin:
+    - "null"
+  methods:
+    - OPTIONS
+  allowedHeaders: []
+  exposedHeaders: []
+  credentials: false
+  maxAge: null
+git:
+  backend: auto

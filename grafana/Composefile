@@ -1,11 +1,10 @@
 services:
   grafana:
-    image: 'docker.io/grafana/grafana:12.3'
+    image: 'docker.io/grafana/grafana:12.4'
     container_name: grafana-app-service
     hostname: 'grafana'
     restart: unless-stopped
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
       - 'grafana_data:/var/lib/grafana'
     labels:
       - "com.infra.service=grafana"

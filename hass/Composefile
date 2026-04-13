@@ -8,13 +8,12 @@ services:
       - '1900:1900' # UPnP
       - '5353:5353' # Avahi
     environment:
-      - TZ=Etc/UTC
+      TZ: ${SELFHOSTED_TZ}
     volumes:
-      - 'hass_app_data:/config'
-      - 'hass_media_data:/config/media'
-      - 'hass_log_data:/var/log'
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/run/dbus:/run/dbus:ro'
+      - hass_app_data:/config
+      - hass_media_data:/config/media
+      - hass_log_data:/var/log
+      - /run/dbus:/run/dbus:ro
     devices:
       - '/dev/ttyACM0:/dev/ttyACM0'
       - '/dev/dri:/dev/dri'
@@ -39,7 +38,7 @@ services:
       hass:
         condition: service_healthy
     environment:
-      - TZ=Etc/UTC
+      TZ: ${SELFHOSTED_TZ}
     volumes:
       - ./conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./conf/mosquitto_creds.conf:/mosquitto/config/credentials.conf

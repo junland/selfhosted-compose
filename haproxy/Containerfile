@@ -12,7 +12,7 @@ ADD https://github.com/haproxytech/dataplaneapi/releases/download/v${DATA_PLANE_
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y liblua5.3-0 libopentracing-c-wrapper0 libopentracing1 curl socat wget iputils-ping && apt-get clean all
 
-RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/lego
+RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/external
 
 RUN chown -R haproxy:haproxy /run/haproxy
 

@@ -46,7 +46,7 @@ services:
       - --remote-debugging-port=9222
 
   meilisearch:
-    image: 'docker.io/getmeili/meilisearch:v1.13'
+    image: 'docker.io/getmeili/meilisearch:v1.42'
     container_name: 'hoarder-search-service'
     hostname: 'meilisearch'
     restart: unless-stopped

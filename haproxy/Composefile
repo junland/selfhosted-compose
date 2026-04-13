@@ -13,9 +13,7 @@ services:
     environment:
       TZ: ${SELFHOSTED_TZ}
     volumes:
-      - /etc/localtime:/etc/localtime:ro
       - ./conf:/var/lib/haproxy
-      - /etc/timezone:/etc/timezone:ro
       - /var/run/haproxy:/var/run/haproxy
       - '$SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:/etc/ssl/certs/external'
     command: haproxy -f haproxy.cfg -f backend

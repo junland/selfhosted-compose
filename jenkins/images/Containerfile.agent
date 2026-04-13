@@ -12,9 +12,6 @@ ENV LANGUAGE=POSIX
 
 RUN touch /.dockerenv
 
-# Set timezone
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE >/etc/timezone
-
 # Install dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     apt-transport-https \

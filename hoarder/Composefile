@@ -5,6 +5,7 @@ services:
     hostname: 'hoarder'
     restart: unless-stopped
     environment:
+      TZ: ${SELFHOSTED_TZ}
       BROWSER_WEB_URL: ${SELFHOSTED_HOARDER_BROWSER_WEB_URL}
       CRAWLER_NUM_WORKERS: ${SELFHOSTED_HOARDER_CRAWLER_NUM_WORKERS}
       CRAWLER_VIDEO_DOWNLOAD: ${SELFHOSTED_HOARDER_CRAWLER_VIDEO_DOWNLOAD}
@@ -21,8 +22,6 @@ services:
       OLLAMA_BASE_URL: ${SELFHOSTED_HOARDER_OLLAMA_BASE_URL}
       OLLAMA_KEEP_ALIVE: ${SELFHOSTED_HOARDER_OLLAMA_KEEP_ALIVE}
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
       - hoarder_app_data:/data
 
   chrome:
@@ -33,6 +32,8 @@ services:
     container_name: 'hoarder-chrome-service'
     hostname: 'chrome'
     restart: unless-stopped
+    environment:
+      TZ: ${SELFHOSTED_TZ}
     command:
       - --disable-dev-shm-usage
       - --disable-gpu
@@ -50,11 +51,10 @@ services:
     hostname: 'meilisearch'
     restart: unless-stopped
     environment:
+      TZ: ${SELFHOSTED_TZ}
       MEILI_MASTER_KEY: ${SELFHOSTED_HOARDER_MEILI_MASTER_KEY}
       MEILI_NO_ANALYTICS: ${SELFHOSTED_HOARDER_MEILI_NO_ANALYTICS}
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '/etc/timezone:/etc/timezone:ro'
       - hoarder_search_data:/meili_data
 
 volumes:

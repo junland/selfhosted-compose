@@ -26,12 +26,6 @@ services:
       - "com.infra.service=ci"
     cap_add:
       - SYS_CHROOT
-    deploy:
-      resources:
-        limits:
-          cpus: 8
-        reservations:
-          cpus: 4
 
   agent:
     build:
@@ -61,12 +55,6 @@ services:
       - "com.infra.service=ci"
     cap_add:
       - SYS_CHROOT
-    deploy:
-      resources:
-        limits:
-          cpus: 10
-        reservations:
-          cpus: 10
 
 secrets:
   host_ssh_key:

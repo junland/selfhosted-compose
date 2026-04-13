@@ -8,9 +8,9 @@ services:
     hostname: 'jellyfin'
     restart: unless-stopped
     environment:
+      TZ: ${SELFHOSTED_TZ}
       JELLYFIN_PublishedServerUrl: ${SELFHOSTED_JELLYFIN_PUBLISHED_SERVICE_URL}
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
       - '/mnt/storage/media:/media'
       - 'jellyfin_cache_data:/cache'
       - 'jellyfin_data:/config'

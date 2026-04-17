@@ -1,6 +1,6 @@
 services:
   gitd:
-    image: 'codeberg.org/forgejo/forgejo:14'
+    image: 'codeberg.org/forgejo/forgejo:15'
     container_name: gitd-app-service
     hostname: 'gitd'
     restart: unless-stopped

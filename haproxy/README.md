@@ -34,7 +34,7 @@ The HTTPS frontend applies HSTS, enables compression, captures selected headers,
 | `ollama` | `ollama` | `ollama-app-service:11434` |
 | `tavern` | `tavern` | `tavern-app-service:8000` |
 
-Any request that does not match one of these ACLs is sent to `deny_403` (name only), which is configured to return HTTP 400.
+Any request that does not match one of these ACLs is sent to `deny_403`, which denies the request (see `haproxy.cfg` for the configured status code).
 
 ## Data Plane API (optional)
 

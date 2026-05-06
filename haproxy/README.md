@@ -31,7 +31,7 @@ Host header prefixes determine the backend to use. Requests that do not match an
 | `ollama` | `ollama` | `ollama-app-service:11434` |
 | `tavern` | `tavern` | `tavern-app-service:8000` |
 
-Unknown hosts are routed to the `deny_403` backend, which returns an HTTP 400 response.
+Unknown hosts are routed to the `deny_403` backend, which returns an HTTP 400 response (the backend name is legacy).
 
 ## Observability and health checks
 

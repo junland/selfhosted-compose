@@ -114,6 +114,9 @@ logging:
   minLogLevel: 0
 rateLimiting:
   preferRealIpHeader: false
+  basicAuthMaxAttempts: 5
+  accountsLoginMaxAttempts: 5
+  accountsRecoverMaxAttempts: 5
 enableServerPluginsAutoUpdate: true
 gemini:
   apiVersion: v1beta
@@ -137,6 +140,9 @@ hostWhitelist:
 sso:
   autheliaAuth: false
   authentikAuth: false
+  trustedProxies:
+    - ::1
+    - 127.0.0.1
 heartbeatInterval: 0
 cors:
   enabled: true
@@ -150,3 +156,17 @@ cors:
   maxAge: null
 git:
   backend: auto
+enableKeepAlive: false
+privateAddressWhitelist:
+  enabled: false
+  allowUnresolvedHosts: false
+  log:
+    blockedRequests: true
+    allowedRequests: false
+  allowedRanges:
+    - 127.0.0.0/8
+    - ::1/128
+forwardedHeaders:
+  xRealIp: true
+  xForwardedFor: true
+  cfConnectingIp: false

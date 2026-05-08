@@ -24,6 +24,7 @@ http:
     - 172.30.33.0/24
     - 10.89.5.0/24
     - 10.89.0.0/24
+    - 192.168.1.0/24
   ip_ban_enabled: true
   login_attempts_threshold: 5
 

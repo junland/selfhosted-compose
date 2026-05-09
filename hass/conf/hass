@@ -1,8 +1,5 @@
 # Loads default set of integrations. Do not remove.
 default_config:
-  homeassistant:
-    media_dirs:
-      media: /config/media
 
 # Load frontend themes from the themes folder
 frontend:
@@ -25,7 +22,7 @@ http:
     - 10.89.5.0/24
     - 10.89.0.0/24
     - 192.168.1.0/24
-  ip_ban_enabled: true
+  ip_ban_enabled: false
   login_attempts_threshold: 5
 
 mobile_app: # ha's ios/android app

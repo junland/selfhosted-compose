@@ -10,6 +10,7 @@ services:
     environment:
       TZ: ${SELFHOSTED_TZ}
     volumes:
+      - ./conf/hass:/config/configuration.yaml
       - hass_app_data:/config
       - hass_media_data:/config/media
       - hass_log_data:/var/log

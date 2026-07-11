@@ -13,9 +13,9 @@ services:
     environment:
       TZ: ${SELFHOSTED_TZ}
     volumes:
-      - ./conf:/var/lib/haproxy
-      - /var/run/haproxy:/var/run/haproxy
-      - '$SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:/etc/ssl/certs/external'
+      - ./conf:/var/lib/haproxy:ro
+      - /var/run/haproxy:/var/run/haproxy:ro
+      - '$SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:/etc/ssl/certs/external':ro
     command: haproxy -f haproxy.cfg -f backend
     labels:
       - "io.containers.autoupdate=local"

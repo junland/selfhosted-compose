@@ -69,6 +69,30 @@ A collection of Docker Compose files for managing self-hosted services. Each ser
 └── tavern/              # SillyTavern chat interface
 ```
 
+## Example Systemd Service File
+
+Below is a example of a systemd file if you want to put this as a service:
+
+```
+[Unit]
+Description=Selfhosted Applications
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+RemainAfterExit=true
+WorkingDirectory=/etc/selfhosted-ng
+ExecStartPre=/usr/bin/mkdir -p /var/run/haproxy
+ExecStartPre=/usr/bin/docker compose -p selfhosted -f Composefile --env-file ./default_override.env build
+ExecStart=/usr/bin/docker compose -p selfhosted -f Composefile --env-file ./default_override.env up --remove-orphans -d
+ExecStopPost=/usr/bin/docker stop --filter 'name=-service$'
+ExecStop=/usr/bin/ldocker compose -p selfhosted -f Composefile --env-file ./default_override.env down -t 120
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

@@ -8,6 +8,10 @@ dataplaneapi:
     api_port: 0
   scheme:
   - http
+  user:
+  - name: admin
+    insecure: true
+    password: '"${SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD}"'
 haproxy:
   reload:
     reload_strategy: custom

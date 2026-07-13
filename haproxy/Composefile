@@ -17,6 +17,12 @@ services:
       - /var/run/haproxy:/var/run/haproxy
       - "${SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:?SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR is required}:/var/lib/haproxy/certs:ro"
     command: haproxy -f haproxy.cfg -f backend
+    healthcheck:
+      test: curl -sS --fail http://localhost:8080/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     labels:
       - "io.containers.autoupdate=local"
       - "com.infra.service=haproxy"
@@ -41,7 +47,7 @@ services:
       - "${SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:?SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR is required}:/var/lib/haproxy/certs:ro"
     command: /usr/local/bin/run-dataplaneapi.sh
     healthcheck:
-      test: ["CMD-SHELL", "curl --request GET --user admin:$$SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD http://localhost:5555/v3/info"]
+      test: curl -sS --fail --request GET --user admin:$$SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD http://localhost:5555/v3/info || exit 1
       interval: 30s
       timeout: 10s
       retries: 3

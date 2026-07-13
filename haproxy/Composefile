@@ -31,8 +31,6 @@ services:
         condition: service_started
     pid: service:haproxy
     working_dir: /var/lib/haproxy
-    ports:
-      - '127.0.0.1:5555:5555'
     environment:
       TZ: ${SELFHOSTED_TZ}
       SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD: "${SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD:?SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD is required}"

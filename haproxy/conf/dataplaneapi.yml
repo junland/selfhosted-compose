@@ -10,7 +10,7 @@ dataplaneapi:
   - http
   user:
   - name: admin
-    insecure: true
+    insecure: true # The API is bound to the loopback interface.
     password: '"${SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD}"'
 haproxy:
   reload:

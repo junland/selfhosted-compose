@@ -2,10 +2,14 @@ config_version: 2
 name: haproxy-api
 dataplaneapi:
   socket_path: /var/run/data-plane.sock
+  advertised:
+    api_address: ""
+    api_port: 0
   scheme:
   - http
   userlist:
     userlist: controller
+    userlist_file: ""
 haproxy:
   reload:
     reload_strategy: custom

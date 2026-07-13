@@ -1,6 +1,26 @@
 #!/bin/bash
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026 John Unland
 
-# List all .cfg files in the current directory and add "-c" before each one
-BACKEND_FLAGS=$(ls -1 backend/*.cfg | awk '{print "-c " $0}')
+# Exit immediately if a command exits with a non-zero status
+set -e
 
-/usr/local/bin/dataplaneapi --host 0.0.0.0 --port 5555 --haproxy-bin /usr/local/sbin/haproxy -f dataplaneapi.yml -c haproxy.cfg $BACKEND_FLAGS --reload-cmd "kill -SIGUSR2 1" --reload-delay 5 --restart-cmd "kill -SIGUSR2 1" --userlist haproxy-dataplaneapi
+# Define configuration flags
+DATAPLANE_API_CONF_FLAGS=(
+    --host "127.0.0.1"
+    --port "5555"
+    --socket-path "/var/run/data-plane.sock"
+    --haproxy-bin "/usr/local/sbin/haproxy"
+    -f "dataplaneapi.yml"
+    -c "haproxy.cfg"
+)
+
+# Define lifecycle flags using an array to safely handle internal quotes
+DATAPLANE_API_LIFECYCLE_FLAGS=(
+    --reload-cmd "kill -SIGUSR2 1"
+    --reload-delay 5
+    --restart-cmd "kill -SIGUSR2 1"
+)
+
+# Execute dataplaneapi using array expansion
+exec /usr/local/sbin/dataplaneapi "${DATAPLANE_API_CONF_FLAGS[@]}" "${DATAPLANE_API_LIFECYCLE_FLAGS[@]}"

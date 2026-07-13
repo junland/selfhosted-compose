@@ -10,6 +10,9 @@ override.env
 *.pem
 *.crt
 
+# HAProxy specific files
+haproxy.cfg.*
+
 # Runtime data and volumes
 data/
 volumes/

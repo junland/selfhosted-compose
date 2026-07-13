@@ -2,7 +2,7 @@ FROM docker.io/haproxy:latest
 
 USER root
 
-ENV DATA_PLANE_API_VERSION=3.3.5
+ENV DATA_PLANE_API_VERSION=3.4.0
 
 ENV DATA_PLANE_API_ARCH=x86_64
 
@@ -12,7 +12,7 @@ ADD https://github.com/haproxytech/dataplaneapi/releases/download/v${DATA_PLANE_
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y liblua5.3-0 libopentracing-c-wrapper0 libopentracing1 curl socat wget iputils-ping && apt-get clean all
 
-RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/external
+RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/external /var/lib/haproxy/certs
 
 RUN chown -R haproxy:haproxy /run/haproxy
 

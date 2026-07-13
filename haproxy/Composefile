@@ -21,10 +21,10 @@ services:
       - "io.containers.autoupdate=local"
       - "com.infra.service=haproxy"
 
-  dataplane-api:
+  haproxy-api:
     image: localhost/haproxy:latest
-    container_name: haproxy-dataplane-api
-    hostname: 'haproxy-dataplane-api'
+    container_name: haproxy-api-service
+    hostname: 'haproxy-api'
     restart: unless-stopped
     depends_on:
       haproxy:

@@ -1,17 +1,11 @@
 config_version: 2
-name: haproxy
-mode: single
-status: ""
+name: haproxy-api
 dataplaneapi:
-  advertised:
-    api_address: ""
-    api_port: 0
+  socket_path: /var/run/data-plane.sock
   scheme:
   - http
-  user:
-  - name: admin
-    insecure: true # The API is bound to the loopback interface.
-    password: '"${SELFHOSTED_HAPROXY_DATAPLANE_API_PASSWORD}"'
+  userlist:
+    userlist: controller
 haproxy:
   reload:
     reload_strategy: custom

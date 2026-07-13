@@ -7,7 +7,7 @@ set -e
 
 # Define configuration flags
 DATAPLANE_API_CONF_FLAGS=(
-    --host "0.0.0.0"
+    --host "127.0.0.1"
     --port "5555"
     --socket-path "/var/run/data-plane.sock"
     --haproxy-bin "/usr/local/sbin/haproxy"

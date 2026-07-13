@@ -23,6 +23,12 @@ services:
       OLLAMA_KEEP_ALIVE: ${SELFHOSTED_HOARDER_OLLAMA_KEEP_ALIVE}
     volumes:
       - hoarder_app_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   chrome:
     build:
@@ -44,6 +50,12 @@ services:
       - --no-sandbox
       - --remote-debugging-address=0.0.0.0
       - --remote-debugging-port=9222
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:9222/json/version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   meilisearch:
     image: 'docker.io/getmeili/meilisearch:v1.42'
@@ -56,6 +68,12 @@ services:
       MEILI_NO_ANALYTICS: ${SELFHOSTED_HOARDER_MEILI_NO_ANALYTICS}
     volumes:
       - hoarder_search_data:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7700/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 volumes:
   hoarder_app_data:

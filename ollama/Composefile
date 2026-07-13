@@ -13,6 +13,12 @@ services:
       - ollama_app_data:/root/.ollama
     devices:
       - nvidia.com/gpu=all  
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "io.containers.autoupdate=registry"
       - "com.infra.service=ollama"

@@ -14,7 +14,7 @@ services:
       TZ: ${SELFHOSTED_TZ}
     volumes:
       - ./conf:/var/lib/haproxy:ro
-      - haproxy-runtime:/var/lib/haproxy/run/haproxy
+      - /var/run/haproxy:/var/run/haproxy
       - "${SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:?SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR is required}:/var/lib/haproxy/certs:ro"
     command: haproxy -f haproxy.cfg -f backend
     labels:
@@ -39,7 +39,7 @@ services:
     volumes:
       # The Data Plane API persists configuration updates through this mount.
       - ./conf:/var/lib/haproxy
-      - haproxy-runtime:/run/haproxy
+      - /var/run/haproxy:/run/haproxy
       - "${SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR:?SELFHOSTED_HAPROXY_EXTERNAL_CERTS_DIR is required}:/var/lib/haproxy/certs:ro"
     command: /usr/local/bin/run-dataplaneapi.sh
     healthcheck:
@@ -51,6 +51,3 @@ services:
     labels:
       - "io.containers.autoupdate=local"
       - "com.infra.service=haproxy-dataplane-api"
-
-volumes:
-  haproxy-runtime:

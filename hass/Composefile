@@ -31,7 +31,7 @@ services:
       - "com.infra.service=hass"
   
   hass_mq:
-    image: 'docker.io/eclipse-mosquitto:latest'
+    image: 'docker.io/eclipse-mosquitto:openssl'
     container_name: hass-mq-service
     hostname: 'hass_mq'
     restart: unless-stopped

@@ -3,8 +3,8 @@ name: haproxy-api
 dataplaneapi:
   socket_path: /var/run/data-plane.sock
   advertised:
-    api_address: ""
-    api_port: 0
+    api_address: 127.0.0.1
+    api_port: 5555
   scheme:
   - http
   userlist:

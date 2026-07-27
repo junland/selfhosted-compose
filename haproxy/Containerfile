@@ -6,6 +6,4 @@ RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/external /var/lib/haprox
 
 RUN chown -R haproxy:haproxy /run/haproxy
 
-RUN mv /tmp/dataplaneapi /usr/local/sbin && chmod +x /usr/local/sbin/dataplaneapi && chown root:root /usr/local/sbin/dataplaneapi
-
 RUN haproxy -vv

@@ -1,4 +1,4 @@
-FROM docker.io/haproxytech/haproxy-alpine:3.4-s6
+FROM docker.io/haproxytech/haproxy:alpine-s6-3.4
 
 USER root
 

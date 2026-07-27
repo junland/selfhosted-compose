@@ -6,4 +6,12 @@ RUN mkdir -p /run/haproxy /etc/ssl/certs /etc/ssl/certs/external /var/lib/haprox
 
 RUN chown -R haproxy:haproxy /run/haproxy
 
+# The default s6 service only loads /etc/haproxy/haproxy.cfg, which leaves the
+# backend definitions under /etc/haproxy/backend unloaded, causing HAProxy to
+# fail with "unable to find required use_backend" errors. Load the backend
+# directory as well so backends defined there are picked up.
+RUN sed -i \
+    's|-f /etc/haproxy/haproxy.cfg|-f /etc/haproxy/haproxy.cfg -f /etc/haproxy/backend|' \
+    /etc/s6-overlay/s6-rc.d/haproxy/run
+
 RUN haproxy -vv

@@ -65,7 +65,7 @@ services:
 
 secrets:
   host_ssh_key:
-    file: ~/.ssh/jenkins_agent_key.pub
+    file: /root/.ssh/jenkins_agent_key.pub
 
 volumes:
   ci_app_data:

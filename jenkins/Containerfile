@@ -7,4 +7,7 @@ RUN jenkins-plugin-cli --plugins configuration-as-code
 ARG JAVA_OPTS
 ENV JAVA_OPTS "-Djenkins.install.runSetupWizard=false ${JAVA_OPTS:-}"
 
+# Create a global ssh key directory outside of the jenkins home directory so that it can be mounted as a volume and shared with other containers.
+RUN mkdir -p /etc/jenkins/ssh && chown -R jenkins:jenkins /etc/jenkins/ssh && chmod 700 /etc/jenkins/ssh
+
 USER jenkins

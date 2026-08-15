@@ -87,9 +87,6 @@ RUN echo "umask 022" >> /home/jenkins/.bashrc
 RUN echo "hash -r >/dev/null 2>&1 || true" >>/home/jenkins/.bashrc
 RUN test -f /etc/bash.bashrc && mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE || true
 
-# Copy ssh auth keys
-#COPY --chown=jenkins .ssh/default.key "${JENKINS_AGENT_HOME}"/.ssh/authorized_keys
-
 # Setup sshd
 RUN echo "PubkeyAcceptedAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
 USER jenkins

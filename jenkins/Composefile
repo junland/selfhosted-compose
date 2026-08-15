@@ -14,6 +14,7 @@ services:
     volumes:
       - ci_app_data_dev:/var/jenkins_home
       - ./conf/jenkins.yml:/var/jenkins_home/jenkins.yml:ro
+      - ci_app_data_ssh:/etc/jenkins/ssh:ro
       - ${SELFHOSTED_CONTAINER_RUNTIME_SOCKET_FILE}:/var/run/docker.sock
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
@@ -21,7 +22,7 @@ services:
       CASC_JENKINS_CONFIG: /var/jenkins_home/jenkins.yml
       TZ: ${SELFHOSTED_TZ}
     healthcheck:
-      test: curl -sfL http://localhost:8080/health || exit 1
+      test: curl -sfL http://localhost:8080/login || exit 1
       interval: 30s
       timeout: 30s
       retries: 8
@@ -49,6 +50,7 @@ services:
       - 22
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ci_app_data_ssh:/home/jenkins/.ssh:ro
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_AGENT_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
@@ -75,5 +77,9 @@ secrets:
 volumes:
   ci_app_data_dev:
     name: ci_app_data_dev
+    labels:
+      backup: 'true'
+  ci_app_data_ssh:
+    name: ci_app_data_ssh
     labels:
       backup: 'true'

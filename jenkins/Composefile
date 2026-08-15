@@ -7,19 +7,15 @@ services:
     container_name: jenkins-app-service
     hostname: 'jenkins'
     restart: always
-    privileged: true
-    tty: true
     group_add:
       - 1001
     volumes:
       - ci_app_data_dev:/var/jenkins_home
       - ./conf/jenkins.yml:/var/jenkins_home/jenkins.yml:ro
       - ci_app_data_ssh:/etc/jenkins/ssh:ro
-      - ${SELFHOSTED_CONTAINER_RUNTIME_SOCKET_FILE}:/var/run/docker.sock
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
-      CASC_JENKINS_CONFIG: /var/jenkins_home/jenkins.yml
       TZ: ${SELFHOSTED_TZ}
     healthcheck:
       test: curl -sfL http://localhost:8080/login || exit 1
@@ -30,8 +26,6 @@ services:
     labels:
       - "io.containers.autoupdate=registry"
       - "com.infra.service=ci"
-    cap_add:
-      - SYS_CHROOT
 
   agent:
     build:
@@ -55,9 +49,6 @@ services:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_AGENT_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
       TZ: ${SELFHOSTED_TZ}
-    secrets:
-      - source: host_ssh_key
-        target: /home/jenkins/.ssh/authorized_keys
     healthcheck:
       test: nc -zv 127.0.0.1 22
       interval: 30s
@@ -69,10 +60,6 @@ services:
       - "com.infra.service=ci"
     cap_add:
       - SYS_CHROOT
-
-secrets:
-  host_ssh_key:
-    file: /root/.ssh/jenkins_agent_key.pub
 
 volumes:
   ci_app_data_dev:

@@ -14,6 +14,7 @@ services:
       - ./conf/jenkins.yml:/var/jenkins_home/jenkins.yml:ro
       - ci_app_data_ssh:/etc/jenkins/ssh:ro
     environment:
+      JENKINS_INIT_ADMIN_PASSWORD: ${SELFHOSTED_JENKINS_INIT_ADMIN_PASSWORD}
       JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
       TZ: ${SELFHOSTED_TZ}

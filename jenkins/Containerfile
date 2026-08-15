@@ -5,7 +5,7 @@ USER root
 RUN jenkins-plugin-cli --plugins configuration-as-code
 
 ARG JAVA_OPTS
-ENV JAVA_OPTS "-Djenkins.install.runSetupWizard=false ${JAVA_OPTS:-}"
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false ${JAVA_OPTS}"
 
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/jenkins.yml
 

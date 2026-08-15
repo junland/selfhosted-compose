@@ -1,6 +1,9 @@
 services:
   jenkins:
-    image: 'docker.io/jenkins/jenkins:latest-jdk25'
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: 'localhost/jenkins:latest'
     container_name: jenkins-app-service
     hostname: 'jenkins'
     restart: always
@@ -9,11 +12,13 @@ services:
     group_add:
       - 1001
     volumes:
-      - ci_app_data:/var/jenkins_home
-      - /var/run/podman/podman.sock:/var/run/docker.sock
+      - ci_app_data_dev:/var/jenkins_home
+      - ./conf/jenkins.yml:/var/jenkins_home/jenkins.yml:ro
+      - ${SELFHOSTED_CONTAINER_RUNTIME_SOCKET_FILE}:/var/run/docker.sock
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
+      CASC_JENKINS_CONFIG: /var/jenkins_home/jenkins.yml
       TZ: ${SELFHOSTED_TZ}
     healthcheck:
       test: curl -sfL http://localhost:8080/health || exit 1
@@ -30,7 +35,7 @@ services:
   agent:
     build:
       context: .
-      dockerfile: images/Containerfile.agent
+      dockerfile: Containerfile.agent
     image: 'localhost/jenkins-agent:latest'
     container_name: jenkins-agent-service
     hostname: 'jenkins-agent'
@@ -68,7 +73,7 @@ secrets:
     file: /root/.ssh/jenkins_agent_key.pub
 
 volumes:
-  ci_app_data:
-    name: ci_app_data
+  ci_app_data_dev:
+    name: ci_app_data_dev
     labels:
       backup: 'true'

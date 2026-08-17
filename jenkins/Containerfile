@@ -2,7 +2,7 @@ FROM jenkins/jenkins:latest-jdk25
 
 USER root
 
-RUN jenkins-plugin-cli --plugins configuration-as-code
+RUN jenkins-plugin-cli --plugins configuration-as-code role-strategy ssh-slaves
 
 ARG JAVA_OPTS
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false ${JAVA_OPTS}"

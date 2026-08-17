@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Containerfile
+      args: 
+       - JAVA_OPTS=$SELFHOSTED_JENKINS_JAVA_OPTS
     image: 'localhost/jenkins:latest'
     container_name: jenkins-app-service
     hostname: 'jenkins'
@@ -15,8 +17,6 @@ services:
       - ci_app_data_ssh:/etc/jenkins/ssh:ro
     environment:
       JENKINS_INIT_ADMIN_PASSWORD: ${SELFHOSTED_JENKINS_INIT_ADMIN_PASSWORD:?SELFHOSTED_JENKINS_INIT_ADMIN_PASSWORD is required}
-      JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
-      DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
       TZ: ${SELFHOSTED_TZ}
     healthcheck:
       test: curl -sfL http://localhost:8080/login || exit 1
@@ -44,7 +44,6 @@ services:
     expose:
       - 22
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ci_app_data_ssh:/home/jenkins/.ssh:ro
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_AGENT_JAVA_OPTS}

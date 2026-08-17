@@ -57,7 +57,6 @@ credentials:
           - basicSSHUserPrivateKey:
               scope: SYSTEM
               id: agent_ssh_key
-              privateKey: agent_ssh_key
               username: jenkins
               description: "SSH private key file. Provided via file"
               privateKeySource:

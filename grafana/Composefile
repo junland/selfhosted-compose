@@ -4,6 +4,8 @@ services:
     container_name: grafana-app-service
     hostname: 'grafana'
     restart: unless-stopped
+    environment:
+      TZ: ${SELFHOSTED_TZ}
     volumes:
       - 'grafana_data:/var/lib/grafana'
     healthcheck:

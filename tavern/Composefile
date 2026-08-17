@@ -8,9 +8,9 @@ services:
     environment:
       TZ: ${SELFHOSTED_TZ}
       OLLAMA_KEEP_ALIVE: ${SELFHOSTED_TAVERN_OLLAMA_KEEP_ALIVE}
-      SILLYTAVERN_HEARTBEATINTERVAL: 30
-      NODE_ENV: production
-      FORCE_COLOR: 1
+      SILLYTAVERN_HEARTBEATINTERVAL: ${SELFHOSTED_TAVERN_HEARTBEAT_INTERVAL}
+      NODE_ENV: ${SELFHOSTED_TAVERN_NODE_ENV}
+      FORCE_COLOR: ${SELFHOSTED_TAVERN_FORCE_COLOR}
     volumes:
       - ./conf:/home/node/app/config
       - tavern_app_data:/home/node/app/data

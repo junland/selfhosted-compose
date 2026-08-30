@@ -5,8 +5,9 @@ services:
     hostname: 'gitd'
     restart: unless-stopped
     environment:
-      USER_UID: 1000
-      USER_GID: 1000
+      TZ: ${SELFHOSTED_TZ}
+      USER_UID: ${SELFHOSTED_GITD_USER_UID}
+      USER_GID: ${SELFHOSTED_GITD_USER_GID}
     healthcheck:
       test: curl -sS --fail http://localhost:3000/ || exit 1
       interval: 40s

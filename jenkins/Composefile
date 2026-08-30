@@ -1,22 +1,25 @@
 services:
   jenkins:
-    image: 'docker.io/jenkins/jenkins:latest-jdk25'
+    build:
+      context: .
+      dockerfile: Containerfile
+      args: 
+       - JAVA_OPTS=$SELFHOSTED_JENKINS_JAVA_OPTS
+    image: 'localhost/jenkins:latest'
     container_name: jenkins-app-service
     hostname: 'jenkins'
     restart: always
-    privileged: true
-    tty: true
     group_add:
       - 1001
     volumes:
-      - ci_app_data:/var/jenkins_home
-      - /var/run/podman/podman.sock:/var/run/docker.sock
+      - ci_app_data_dev:/var/jenkins_home
+      - ./conf/jenkins.yml:/var/jenkins_home/jenkins.yml:ro
+      - ci_app_data_ssh:/etc/jenkins/ssh:ro
     environment:
-      JAVA_OPTS: ${SELFHOSTED_JENKINS_JAVA_OPTS}
-      DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
+      JENKINS_INIT_ADMIN_PASSWORD: ${SELFHOSTED_JENKINS_INIT_ADMIN_PASSWORD:?SELFHOSTED_JENKINS_INIT_ADMIN_PASSWORD is required}
       TZ: ${SELFHOSTED_TZ}
     healthcheck:
-      test: curl -sfL http://localhost:8080/health || exit 1
+      test: curl -sfL http://localhost:8080/login || exit 1
       interval: 30s
       timeout: 30s
       retries: 8
@@ -24,13 +27,11 @@ services:
     labels:
       - "io.containers.autoupdate=registry"
       - "com.infra.service=ci"
-    cap_add:
-      - SYS_CHROOT
 
   agent:
     build:
       context: .
-      dockerfile: images/Containerfile.agent
+      dockerfile: Containerfile.agent
     image: 'localhost/jenkins-agent:latest'
     container_name: jenkins-agent-service
     hostname: 'jenkins-agent'
@@ -43,14 +44,11 @@ services:
     expose:
       - 22
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ci_app_data_ssh:/home/jenkins/.ssh:ro
     environment:
       JAVA_OPTS: ${SELFHOSTED_JENKINS_AGENT_JAVA_OPTS}
       DOCKER_HOST: ${SELFHOSTED_DOCKER_HOST}
       TZ: ${SELFHOSTED_TZ}
-    secrets:
-      - source: host_ssh_key
-        target: /home/jenkins/.ssh/authorized_keys
     healthcheck:
       test: nc -zv 127.0.0.1 22
       interval: 30s
@@ -63,12 +61,12 @@ services:
     cap_add:
       - SYS_CHROOT
 
-secrets:
-  host_ssh_key:
-    file: /root/.ssh/jenkins_agent_key.pub
-
 volumes:
-  ci_app_data:
-    name: ci_app_data
+  ci_app_data_dev:
+    name: ci_app_data_dev
+    labels:
+      backup: 'true'
+  ci_app_data_ssh:
+    name: ci_app_data_ssh
     labels:
       backup: 'true'

@@ -1,0 +1,64 @@
+jenkins:
+  systemMessage: Jenkins managed via Configuration as Code
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: admin
+         password: ${JENKINS_INIT_ADMIN_PASSWORD}
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "Jenkins administrators"
+            permissions:
+              - "Overall/Administer"
+            entries:
+              - user: "admin"
+          - name: "readonly"
+            description: "Read-only users"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+            entries:
+              - user: "authenticated"
+  crumbIssuer: "standard" 
+  numExecutors: 0
+  nodes:
+    - permanent:
+        labelString: "linux"
+        mode: NORMAL
+        name: "Worker 1"
+        numExecutors: 2
+        remoteFS: "/home/jenkins"
+        launcher:
+          ssh:
+            host: "agent"
+            port: 22
+            javaPath: "/opt/java/openjdk/bin/java"
+            credentialsId: agent_ssh_key
+            launchTimeoutSeconds: 60
+            maxNumRetries: 3
+            retryWaitTime: 30
+            sshHostKeyVerificationStrategy:
+              manuallyTrustedKeyVerificationStrategy:
+                requireInitialManualTrust: false
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: SYSTEM
+              id: admin
+              username: admin
+              password: ${JENKINS_INIT_ADMIN_PASSWORD}
+          - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: agent_ssh_key
+              username: jenkins
+              description: "SSH private key file. Provided via file"
+              privateKeySource:
+                directEntry:
+                  privateKey: "${readFile:${AGENT_SSH_PRIVATE_FILE_PATH}}"

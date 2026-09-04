@@ -2,7 +2,7 @@ include:
   - haproxy/Composefile
   - ollama/Composefile
   - gitd/Composefile
-  - jenkins/Composefile
+#  - jenkins/Composefile
   - hass/Composefile
   - jellyfin/Composefile
   - hoarder/Composefile

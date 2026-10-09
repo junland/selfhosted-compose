@@ -5,7 +5,7 @@ USER root
 # Install chrome extension from URL and place it in /opt
 RUN apk add --no-cache curl unzip
 
-RUN mkdir -p /usr/src/app/extensions/adblock
+RUN mkdir -p /usr/src/app/extensions/adblock /etc/chromium/policies/managed /etc/chromium/policies/recommended
 
 ADD https://gitlab.com/eyeo/browser-extensions-and-premium/extensions/extensions/-/releases/adblock-6.33.5/downloads/adblock-chrome-6.33.5-mv3.zip /tmp/extension.zip
 

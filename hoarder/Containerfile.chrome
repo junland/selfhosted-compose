@@ -19,6 +19,5 @@ WORKDIR /usr/src/app
 
 ENV CHROME_BIN=/usr/bin/chromium-browser 
 ENV CHROME_PATH=/usr/lib/chromium/
-ENV CHROMIUM_FLAGS="--disable-software-rasterizer --load-extension=/usr/src/app/extensions/adblock"
-
-ENTRYPOINT ["chromium-browser", "--headless"]
+ENTRYPOINT ["chromium-browser"]
+CMD ["--headless", "--disable-dev-shm-usage", "--disable-gpu", "--disable-sync", "--hide-scrollbars", "--load-extension=/usr/src/app/extensions/adblock", "--no-first-run", "--no-sandbox", "--remote-debugging-address=0.0.0.0", "--remote-debugging-port=9222", "--window-size=1280,720", "--ozone-platform=headless", "--password-store=basic", "--use-mock-keychain", "--disable-features=UseDBus"]

@@ -40,17 +40,6 @@ services:
     restart: unless-stopped
     environment:
       TZ: ${SELFHOSTED_TZ}
-    command:
-      - --disable-dev-shm-usage
-      - --disable-gpu
-      - --disable-sync
-      - --hide-scrollbars
-      - --load-extension=/usr/src/app/extensions/adblock
-      - --no-first-run
-      - --no-sandbox
-      - --remote-debugging-address=0.0.0.0
-      - --remote-debugging-port=9222
-      - --window-size=1280,720
     healthcheck:
       test: curl -sS --fail http://localhost:9222/json/version || exit 1
       interval: 30s

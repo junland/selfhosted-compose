@@ -7,6 +7,8 @@ RUN apk add --no-cache curl unzip
 
 RUN mkdir -p /usr/src/app/extensions/adblock /etc/chromium/policies/managed /etc/chromium/policies/recommended
 
+RUN echo '{"BackgroundModeEnabled":false,"MetricsReportingEnabled":false,"CloudManagementEnrollmentToken":""}' > /etc/chromium/policies/managed/policy.json
+
 ADD https://gitlab.com/eyeo/browser-extensions-and-premium/extensions/extensions/-/releases/adblock-6.33.5/downloads/adblock-chrome-6.33.5-mv3.zip /tmp/extension.zip
 
 RUN unzip /tmp/extension.zip -d /usr/src/app/extensions/adblock && rm /tmp/extension.zip
